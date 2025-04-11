@@ -1,214 +1,163 @@
 
-# Hybrid Models in Quantitative Finance
+# Hybrid Models: BSHW, Heston Hull-White, Schöbel-Zhu Hull-White, Diversification Product Hull-White
 
-This repository provides an implementation of various hybrid models used in quantitative finance. The models featured include:  
-- **BSHW (Black-Scholes Hull-White) Hybrid Model**  
-- **Heston Hull-White Hybrid Model**  
-- **Schobel-Zhu Hull-White Hybrid Model**  
-- **Diversification Product Hull-White Model**  
+This project presents a unified framework to implement and analyze **Hybrid Financial Models** by combining **Stochastic Volatility Models** and **Stochastic Interest Rate Models**. The models included in this repository are:
 
-The project is developed as a [Streamlit](https://streamlit.io) web application to visually demonstrate model dynamics and pricing simulations in a user-friendly interface. This README covers the theoretical background, the underlying mathematical formulations in LaTeX, practical implementation details, and industry practices—a resource especially useful if you are preparing for quant interviews.
+- **Black-Scholes Hull-White (BSHW)**
+- **Heston Hull-White (HHW)**
+- **Schöbel-Zhu Hull-White (SZHW)**
+- **Diversification Product Hull-White (DPHW)**
 
----
+## 📌 Project Goal
 
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Theoretical Background: Block 1 – Quant Finance Theory](#theoretical-background-block-1--quant-finance-theory)
-    - [Hybrid Models: Concept & Motivation](#hybrid-models-concept--motivation)
-    - [Mathematical Formulation in LaTeX](#mathematical-formulation-in-latex)
-3. [Practical Implementation: Block 2 – Model Implementation & Usage](#practical-implementation-block-2----model-implementation--usage)
-    - [Repository Structure & Running the App](#repository-structure--running-the-app)
-    - [Calibration, Simulation, and Industry Practice Tips](#calibration-simulation-and-industry-practice-tips)
-4. [Examples and Use Cases](#examples-and-use-cases)
-5. [Additional Tips for Quant Interview Preparation](#additional-tips-for-quant-interview-preparation)
-6. [Conclusion](#conclusion)
-7. [References](#references)
+To model and simulate financial derivatives by integrating interest rate dynamics (Hull-White model) with popular stochastic volatility models to more accurately reflect real-world market behavior. These models are widely used in the pricing of **long-dated options**, **hybrid derivatives**, and **structured products**.
 
 ---
 
-## Overview
+## 🔧 Models Explained
 
-This repository demonstrates advanced hybrid models that integrate different components used in modern quantitative finance. Hybrid models combine aspects of stochastic interest rates and stochastic volatility (or other dynamic factors) to more accurately capture market behavior. They are particularly useful in pricing complex derivatives and structured products. The app allows users to explore the simulation of these models, adjust key parameters, and visualize results in real time.
+### 1. Black-Scholes Hull-White (BSHW) Model
+
+A hybrid extension of the Black-Scholes model that incorporates stochastic interest rates using the Hull-White process.
+
+**Model Equations**:
+- Asset dynamics:  
+  $$ dS_t = (r_t - q) S_t dt + \sigma S_t dW^S_t $$
+- Interest rate dynamics (Hull-White):  
+  $$ dr_t = (\theta(t) - a r_t) dt + \eta dW^r_t $$
+
+Where:
+- \( S_t \): asset price  
+- \( r_t \): short rate  
+- \( \sigma \): asset volatility  
+- \( q \): dividend yield  
+- \( a, \eta \): Hull-White parameters  
+- \( \theta(t) \): time-dependent drift to fit the initial term structure  
+- \( W^S_t \), \( W^r_t \): correlated Brownian motions
 
 ---
 
-## Theoretical Background: Block 1 – Quant Finance Theory
+### 2. Heston Hull-White (HHW) Model
 
-### Hybrid Models: Concept & Motivation
+Combines the **Heston stochastic volatility model** with the **Hull-White interest rate model**.
 
-Hybrid models in finance are designed to capture multiple sources of randomness simultaneously. For example:  
-- **Interest Rate Component:** Typically modeled using the Hull-White process to represent the evolution of interest rates.  
-- **Asset Price or Volatility Component:** Modeled using either the Black-Scholes, Heston, or Schobel-Zhu dynamics to capture the stochastic behavior of asset prices or volatilities.
+**Model Equations**:
+- Asset price:  
+  $$ dS_t = (r_t - q) S_t dt + \sqrt{v_t} S_t dW^S_t $$
+- Volatility:  
+  $$ dv_t = \kappa (\bar{v} - v_t) dt + \sigma_v \sqrt{v_t} dW^v_t $$
+- Interest rate:  
+  $$ dr_t = (\theta(t) - a r_t) dt + \eta dW^r_t $$
 
-In a hybrid model, these processes are combined—allowing for correlations between interest rate movements and asset price fluctuations. This is particularly useful for pricing instruments where both rates and volatility influence the option value.
+Correlation:
+- \( dW^S_t, dW^v_t, dW^r_t \) are correlated with specified correlation matrix.
 
-### Mathematical Formulation in LaTeX
+---
 
-Below are the key equations underlying each hybrid model, fully formatted with LaTeX:
+### 3. Schöbel-Zhu Hull-White (SZHW) Model
 
-#### 1. Black-Scholes Hull-White (BSHW) Model
+This model uses the **Ornstein-Uhlenbeck process** for volatility (mean-reverting Gaussian process), suitable for modeling equity-linked products.
 
-The asset price \( S_t \) dynamics are given by:  
-$$
-dS_t = r_t S_t\, dt + \sigma S_t\, dW_t^{(S)}
-$$  
-where:  
-- \( r_t \) is the short rate from the Hull-White model,  
-- \( \sigma \) is the constant volatility,  
-- \( dW_t^{(S)} \) represents the Brownian motion for the asset process.
+**Model Equations**:
+- Asset price:  
+  $$ dS_t = (r_t - q) S_t dt + \sigma_t S_t dW^S_t $$
+- Volatility:  
+  $$ d\sigma_t = \kappa (\bar{\sigma} - \sigma_t) dt + \xi dW^\sigma_t $$
+- Interest rate:  
+  $$ dr_t = (\theta(t) - a r_t) dt + \eta dW^r_t $$
 
-The Hull-White model for the short rate \( r_t \) is:  
-$$
-dr_t = \left(\theta_t - a\, r_t\right)dt + \sigma_r\, dW_t^{(r)}
-$$  
-with:  
-- \( a \) as the mean reversion rate,  
-- \( \theta_t \) as the time-dependent drift,  
-- \( \sigma_r \) as the volatility of the short rate,  
-- \( dW_t^{(r)} \) as the Brownian motion for the interest rate.
+Here, volatility follows a normal distribution rather than the square-root process in Heston.
 
-The correlation between the two processes is given by:  
-$$
-dW_t^{(S)} \, dW_t^{(r)} = \rho \, dt
-$$
+---
 
-#### 2. Heston Hull-White Hybrid Model
+### 4. Diversification Product Hull-White (DPHW)
 
-The stochastic volatility process \( v_t \) is modeled as:  
-$$
-dv_t = \kappa (\theta_v - v_t) dt + \xi \sqrt{v_t}\, dZ_t
-$$  
-where:  
-- \( \kappa \) is the rate of mean reversion of \( v_t \),  
-- \( \theta_v \) is the long-term mean of \( v_t \),  
-- \( \xi \) controls the volatility of volatility,  
-- \( dZ_t \) represents a Brownian motion.
+This is a practical hybrid model used for pricing **diversification-linked structured products**. It assumes:
 
-The asset price process under the Heston model combined with the Hull-White short rate is:  
-$$
-dS_t = r_t S_t\, dt + \sqrt{v_t} S_t\, dW_t^{(S)}
-$$
+- A correlation structure between underlying assets and interest rates.
+- Flexibility in payoffs (basket options, quanto products, range accruals, etc.).
 
-#### 3. Schobel-Zhu Hull-White Hybrid Model
+This model adapts the Hull-White short rate model to multiple underlyings with a diversified payoff structure.
 
-The Schobel-Zhu model for stochastic volatility is written as:  
-$$
-dv_t = \alpha (m - v_t)dt + \beta\, dZ_t
-$$  
-and the asset price process becomes:  
-$$
-dS_t = r_t S_t\, dt + f(v_t) S_t\, dW_t^{(S)}
-$$  
-where \( f(v_t) \) represents a function capturing the dependency on the volatility process.
+---
 
-#### 4. Diversification Product Hull-White Model
+## 📊 Key Features
 
-This model integrates diversification of risk factors with the Hull-White short rate. A general formulation can be expressed as:  
-$$
-dr_t = \left(\theta_t - a\, r_t\right)dt + \sigma_r\, dW_t^{(r)} + \sum_{i} \lambda_i X_t^{(i)}
-$$  
-where:  
-- \( X_t^{(i)} \) represents additional risk factors,  
-- \( \lambda_i \) denotes the sensitivity to each factor.
+- Simulates hybrid dynamics using correlated Brownian motions.
+- Supports Monte Carlo simulation.
+- Ready-to-use Python functions for pricing and path generation.
+- Realistic modeling of long-dated and hybrid derivatives.
 
+---
 
-## Practical Implementation: Block 2 – Model Implementation & Usage
+## 🧠 Connection to Quant Finance
 
-### Repository Structure & Running the App
+These hybrid models are used extensively in:
 
-The repository is organized as follows:
+- **Structured Product Pricing** (e.g., callable range accruals, CMS spread options)
+- **Risk Management** in interest rate derivatives
+- **Exotic Option Valuation** where both interest rates and volatilities are uncertain
+- **Insurance Products** (e.g., Variable Annuities with Guaranteed Minimum Benefits)
+
+---
+
+## 🧪 Tools & Libraries
+
+- Python (NumPy, SciPy, Pandas, Matplotlib)
+- Jupyter Notebooks for simulations
+- Scikit-learn (optional for regression-based pricing)
+- QuantLib (integration planned)
+
+---
+
+## 📂 Folder Structure
 
 ```
-├── README.md               # Project overview and documentation
-├── requirements.txt        # List of Python package dependencies
-├── streamlit_app.py        # Main Streamlit application script
-├── models/                 # Directory containing model implementations
-│   ├── bshw.py             # Implementation of the BSHW hybrid model
-│   ├── heston_hw.py        # Implementation of the Heston Hull-White model
-│   ├── schobel_zhu.py      # Implementation of the Schobel-Zhu Hull-White model
-│   └── diversification.py  # Implementation of the Diversification Product Hull White model
-└── data/                   # Directory for sample data and simulation results
+Hybrid-Models/
+│
+├── BSHW_Model.py
+├── Heston_HullWhite_Model.py
+├── SZ_HullWhite_Model.py
+├── Diversified_HullWhite_Model.py
+├── utils.py
+├── README.md
+└── notebooks/
+    ├── BSHW_Simulation.ipynb
+    ├── HHW_Pricing.ipynb
+    └── SZHW_Simulation.ipynb
 ```
 
-#### How to Run
+---
 
-1. **Install Dependencies:**  
-   Create a virtual environment and install the required packages:  
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **Run Streamlit Application:**  
-   Execute the main app script:  
-   ```bash
-   streamlit run streamlit_app.py
-   ```
-3. **Explore the App:**  
-   Open your browser and navigate to the URL provided in the terminal (typically, `http://localhost:8501`).
+## 📈 Future Improvements
 
-### Calibration, Simulation, and Industry Practice Tips
-
-- **Model Calibration:**  
-  Calibrate parameters using market data. For example, align the yield curve and the implied volatility surface by minimizing the pricing error between the model and market prices.
-  
-- **Simulation Techniques:**  
-  Use Monte Carlo simulation to generate sample paths that respect the correlation between asset prices and interest rates.
-  
-- **Practical Example:**  
-  In the Heston Hull-White model, you might calibrate using:
-  - Market-implied volatility \( (\sigma) \) for the asset,
-  - Historical short rate data for the Hull-White process,
-  - And optimization routines (e.g., least squares) to adjust parameters \( a \), \( \sigma_r \), \( \kappa \), \( \theta_v \), and \( \xi \).
-
-- **Industry Practice Tips:**  
-  - **Robust Parameter Estimation:** Ensure thorough data cleaning and robust optimization—regularization can be very beneficial.
-  - **Risk Sensitivity Analysis:** Analyze how option prices change with respect to key model parameters.
-  - **Backtesting:** Evaluate model performance using historical data to gauge robustness across various market conditions.
-  
-> **Nitish Sir Hinglish Note:**  
-> "Yaar, jab interview ke liye prepare kar rahe ho, to practice karna mat bhoolna. Code ko samajh lo, data se interact karo, aur real market ke scenarios pe apne model chalake dekho. Thoda risk sensitivity analysis kar lo, tabhi industry mein entry milegi!"
+- Add support for calibration to market data
+- Integrate QuantLib for advanced pricing tools
+- Portfolio hedging using Greeks under hybrid dynamics
+- GUI using Streamlit for interactive model input
 
 ---
 
-## Examples and Use Cases
+## 🤝 Contribution
 
-- **Option Pricing:**  
-  Hybrid models can price exotic options where both interest rate uncertainty and volatility dynamics significantly impact the pricing.
-  
-- **Risk Management:**  
-  Generate market scenarios to forecast Value at Risk (VaR) or Expected Shortfall (ES) when multiple risk factors are at play.
-  
-- **Portfolio Optimization:**  
-  Dynamic hedging strategies can be optimized by modeling asset prices, volatilities, and interest rates jointly.
+Contributions and feedback are welcome. Please open an issue or submit a pull request.
 
 ---
 
-## Additional Tips for Quant Interview Preparation
+## 👤 Author
 
-- **Understand the Underlying Mathematics:**  
-  Be proficient in deriving and explaining the stochastic differential equations (SDEs) that constitute each hybrid model.
-- **Practice Model Calibration:**  
-  Build calibration routines and understand error minimization in the context of market data.
-- **Review Industry Applications:**  
-  Know how these models are used in risk management and derivative pricing within financial institutions.
-- **Project Presentation:**  
-  Prepare a concise walkthrough of your project detailing your implementation, calibration methods, and simulation techniques.
-
-> **Nitish Sir Hinglish Note:**  
-> "Interview mein bas theory nahi, coding aur practical implementation bhi clear hona chahiye. Ekdum step-by-step batao aur code demo dikhate hue apne analysis ko shaandar banao!"
+**Shubh Shrishrimal**  
+Quantitative Finance Enthusiast | BSc CS | Machine Learning x Derivatives  
+> Aim: To break into quant roles and build powerful financial tools.
 
 ---
 
-## Conclusion
+## 🧠 Nitish Sir Style Hinglish Explanation (Concept Recap)
 
-This repository serves as an all-in-one reference for hybrid models in quantitative finance. By integrating deep theoretical foundations with practical application techniques, it is an excellent tool for both academic exploration and industry practice. Use this resource to understand the mathematical elegance of hybrid models and to enhance your practical skills for real-world quant challenges.
+**"Yeh models tab kaam aate hai jab tumhare paas long-term derivatives hote hai jisme interest rate bhi move karta hai aur volatility bhi random hai. Sirf Black-Scholes nahi chalega bhai, isliye Heston + Hull-White ya SZ + Hull-White jaise hybrid models use karte hai. Market ke real behavior ko capture karne ke liye yeh combo mast hai. Structured products, insurance aur risk management mein inka full use hota hai!"**
 
 ---
 
-## References
-
-- Hull, J. C. *Options, Futures, and Other Derivatives*
-- Heston, S. L. (1993). *A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options.*
-- Schobel, R., & Zhu, J. (1999). *Stochastic Volatility with an Inhomogeneous Volatility of Volatility.*
-- Additional research papers and industry white papers as needed.
+## ⭐ Star this repo if you found it helpful!
 ```
+
