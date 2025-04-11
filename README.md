@@ -2,7 +2,11 @@
 # Hybrid Models: BSHW, Heston Hull-White, Schöbel-Zhu Hull-White, Diversification Product Hull-White
 
 
-Uploading Screen Recording 2025-04-11 191327.mp4…
+
+
+https://github.com/user-attachments/assets/4842e0d5-9bae-4daf-a116-1ae62f5a9f82
+
+
 
 
 This project presents a unified framework to implement and analyze **Hybrid Financial Models** by combining **Stochastic Volatility Models** and **Stochastic Interest Rate Models**. The models included in this repository are:
