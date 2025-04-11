@@ -1,6 +1,3 @@
-Below is an updated version of your README file in which all formulas are properly written in LaTeX using dollar signs. You can copy the Markdown text directly into your project’s README. This version maintains all the detailed theoretical explanations and practical tips, while ensuring every formula is formatted in LaTeX style. 
-
----
 
 # Hybrid Models in Quantitative Finance
 
@@ -8,7 +5,7 @@ This repository provides an implementation of various hybrid models used in quan
 - **BSHW (Black-Scholes Hull-White) Hybrid Model**  
 - **Heston Hull-White Hybrid Model**  
 - **Schobel-Zhu Hull-White Hybrid Model**  
-- **Diversification Product Hull White Model**  
+- **Diversification Product Hull-White Model**  
 
 The project is developed as a [Streamlit](https://streamlit.io) web application to visually demonstrate model dynamics and pricing simulations in a user-friendly interface. This README covers the theoretical background, the underlying mathematical formulations in LaTeX, practical implementation details, and industry practices—a resource especially useful if you are preparing for quant interviews.
 
@@ -17,10 +14,10 @@ The project is developed as a [Streamlit](https://streamlit.io) web application 
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Theoretical Background: Block 1 – Quant Finance Theory](#theoretical-background-block-1-quant-finance-theory)
+2. [Theoretical Background: Block 1 – Quant Finance Theory](#theoretical-background-block-1--quant-finance-theory)
     - [Hybrid Models: Concept & Motivation](#hybrid-models-concept--motivation)
     - [Mathematical Formulation in LaTeX](#mathematical-formulation-in-latex)
-3. [Practical Implementation: Block 2 – Model Implementation & Usage](#practical-implementation-block-2---model-implementation--usage)
+3. [Practical Implementation: Block 2 – Model Implementation & Usage](#practical-implementation-block-2----model-implementation--usage)
     - [Repository Structure & Running the App](#repository-structure--running-the-app)
     - [Calibration, Simulation, and Industry Practice Tips](#calibration-simulation-and-industry-practice-tips)
 4. [Examples and Use Cases](#examples-and-use-cases)
@@ -41,14 +38,14 @@ This repository demonstrates advanced hybrid models that integrate different com
 ### Hybrid Models: Concept & Motivation
 
 Hybrid models in finance are designed to capture multiple sources of randomness simultaneously. For example:  
-- **Interest Rate Component:** Typically modeled using the Hull-White process to represent the evolution of interest rates.
+- **Interest Rate Component:** Typically modeled using the Hull-White process to represent the evolution of interest rates.  
 - **Asset Price or Volatility Component:** Modeled using either the Black-Scholes, Heston, or Schobel-Zhu dynamics to capture the stochastic behavior of asset prices or volatilities.
 
 In a hybrid model, these processes are combined—allowing for correlations between interest rate movements and asset price fluctuations. This is particularly useful for pricing instruments where both rates and volatility influence the option value.
 
 ### Mathematical Formulation in LaTeX
 
-Below are the key equations underlying each hybrid model, fully formatted with dollar sign delimiters for LaTeX:
+Below are the key equations underlying each hybrid model, fully formatted with LaTeX:
 
 #### 1. Black-Scholes Hull-White (BSHW) Model
 
@@ -115,9 +112,6 @@ where:
 - \( X_t^{(i)} \) represents additional risk factors,  
 - \( \lambda_i \) denotes the sensitivity to each factor.
 
-> **Nitish Sir Hinglish Note:** "Bhai, ye hybrid models ekdum mast combination hain—jahan interest rate aur asset price dono ko ek saath capture kiya jata hai. Iska matlab, market ki real complexity ko samajhna thoda aasan ho jata hai."
-
----
 
 ## Practical Implementation: Block 2 – Model Implementation & Usage
 
@@ -155,7 +149,7 @@ The repository is organized as follows:
 ### Calibration, Simulation, and Industry Practice Tips
 
 - **Model Calibration:**  
-  Calibrate parameters using market data. For instance, align the yield curve and the implied volatility surface by minimizing the pricing error between the model and market prices.
+  Calibrate parameters using market data. For example, align the yield curve and the implied volatility surface by minimizing the pricing error between the model and market prices.
   
 - **Simulation Techniques:**  
   Use Monte Carlo simulation to generate sample paths that respect the correlation between asset prices and interest rates.
@@ -171,7 +165,8 @@ The repository is organized as follows:
   - **Risk Sensitivity Analysis:** Analyze how option prices change with respect to key model parameters.
   - **Backtesting:** Evaluate model performance using historical data to gauge robustness across various market conditions.
   
-> **Nitish Sir Hinglish Note:** "Yaar, jab interview ke liye prepare kar rahe ho, to practice karna mat bhoolna. Code ko samajh lo, data se interact karo, aur real market ke scenarios pe apne model chalake dekho. Thoda risk sensitivity analysis kar lo, tabhi industry mein entry milegi!"
+> **Nitish Sir Hinglish Note:**  
+> "Yaar, jab interview ke liye prepare kar rahe ho, to practice karna mat bhoolna. Code ko samajh lo, data se interact karo, aur real market ke scenarios pe apne model chalake dekho. Thoda risk sensitivity analysis kar lo, tabhi industry mein entry milegi!"
 
 ---
 
@@ -199,7 +194,8 @@ The repository is organized as follows:
 - **Project Presentation:**  
   Prepare a concise walkthrough of your project detailing your implementation, calibration methods, and simulation techniques.
 
-> **Nitish Sir Hinglish Note:** "Interview mein bas theory nahi, coding aur practical implementation bhi clear hona chahiye. Ekdum step-by-step batao aur code demo dikhate hue apne analysis ko shaandar banao!"
+> **Nitish Sir Hinglish Note:**  
+> "Interview mein bas theory nahi, coding aur practical implementation bhi clear hona chahiye. Ekdum step-by-step batao aur code demo dikhate hue apne analysis ko shaandar banao!"
 
 ---
 
@@ -215,7 +211,4 @@ This repository serves as an all-in-one reference for hybrid models in quantitat
 - Heston, S. L. (1993). *A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options.*
 - Schobel, R., & Zhu, J. (1999). *Stochastic Volatility with an Inhomogeneous Volatility of Volatility.*
 - Additional research papers and industry white papers as needed.
-
----
-
-This updated README file now clearly presents all formulas in proper LaTeX format using dollar signs. It is designed to help you understand, implement, and showcase hybrid models in quant finance, while also providing actionable insights and interview preparation tips.
+```
