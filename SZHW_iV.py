@@ -183,7 +183,7 @@ def A(u, tau, eta, lambd, Rxsigma, Rrsigma, Rxr, gamma, kappa, sigmabar):
     A_1 = 1.0 / 4.0 * ((-a_1 - d) * tau - 2.0 * np.log((1 - g * np.exp(-d * tau)) / (1.0 - g))) + f_6
 
     # Integration in the function A(u,tau)
-    value = np.zeros([len(u), 1], dtype=np.complex_)
+    value = np.zeros([len(u), 1], dtype=np.complex128)
     N = 500
     arg = np.linspace(0, tau, N)
 
